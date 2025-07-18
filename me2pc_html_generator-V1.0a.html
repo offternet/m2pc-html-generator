@@ -1,0 +1,124 @@
+<! me2pc html Code Generator | Version 1.0 July 17, 2025>
+<! Licensed GPL 3.0>
+<! https://www.gnu.org/licenses/gpl-3.0.en.html>
+<! Author: Robert J. Cooper, Kingman, AZ, USA >
+<! email: robet@offternet.com | https://offternet.com/index.php/contact-menu>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enhanced Raw Code Input html File Generator</title>
+    <style>
+        .input-box {
+            width: 520px;
+            height: 2em; /* One line high */
+            font-size: 20px;
+            margin: 5px 0;
+        }
+        .input-target {
+            width: 90px;
+            height: 2em; /* One line high */
+            font-size: 20px;
+            margin: 5px 0;
+        }
+        textarea {
+            width: 80ch; /* 40 characters wide */
+            height: 20em; /* 10 lines high */
+            overflow: auto; /* automatic scrollbars */
+            resize: both; /* allow resizing */
+            font-family: inherit;
+            font-size: 18px;
+            margin: 5px 0;
+        }
+        button {
+            margin-top: 10px;
+            font-size: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        .required:after {
+            content: " *";
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <p><h3>This code is <a href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_Blank">GNU GPL 3.0 Licensed</a></h3></p>
+    
+    <form id="dataForm">
+        <div>
+            <label for="title" class="required"><font color="red">*</font>Title: (Alphanumeric: Letters and/or Numbers Only. 1st word is filename)</label>
+            <input type="text" id="title" placeholder="Title Required." class="input-box" required >
+        </div>
+        <div>
+            <label for="image">1(a). top image: filename.(png/jpg). Needs: 1(b).URL & 1(c). target is _Self by default.</label>
+            <input type="text" id="image"  placeholder="Optional. If image url entered, 1(b). required." class="input-box" pattern=".*\.(png|jpg)$">
+        </div>
+        <div>
+            <label for="url">1(b). Web URL: Only works if url/image above has been entered. | 1(c). target Options: <b>_Self</b> or  _Blank</label>
+            <input type="text" id="url" class="input-box""><font size="5px">target="<input type="text" id="target" class="input-target" placeholder="_Self">"</font>
+        </div>
+        <div>
+            <label for="description"><img src="https://lowscamp.com/testing/html-generator/images/table-code-here-small-banner-350.png"></label>
+            <textarea id="description" placeholder="Code or Text Required. Use of <table>...</table> provides best control" required></textarea>
+            <p><img src="https://lowscamp.com/testing/html-generator/images/table-code-enc180x35.png"></p>
+        </div>
+        <button type="submit">Generate / Auto Download (title).html File</button>
+    </form>
+
+    <script>
+        document.getElementById('dataForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const title = document.getElementById('title').value.trim();
+            const image = document.getElementById('image').value.trim();
+            const url = document.getElementById('url').value.trim();
+            const target = document.getElementById('target').value.trim();
+            const description = document.getElementById('description').value.trim();
+            
+            
+            // Extract first word for filename
+            const firstWord = title.split(' ')[0];
+            const filename = firstWord ? firstWord + '.html' : 'data.txt';
+            
+            // Create file content (each value on its own line)
+            let fileContent = "\<html\>\n\<head\>\n<title>";
+            fileContent += `${title}`;
+            fileContent += "\<\/title\>\n\<\/head\>\n\<body\>";
+            fileContent += url ? `\n\<center\>\<a href\=\"${url}\" target\=\"${target}\"\>\<img src\=\"${image}\"\>\<\/a\>\<br\>\<br\>\<\/center\>` : "\n"; // URL line (empty if not provided)
+            fileContent += description ? `${description}\n\n` : "\n"; // Description line
+            fileContent += "\<br\>\<br\>\<\/body\>\<\/html\>"; // Add close out of html page
+            
+            // Create blob and download
+            const blob = new Blob([fileContent], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    </script>
+    <br>
+
+    <font color="red">* Input required</font>
+    <br><br>
+    <b>me2pc html Generator Version 1.0</b> |  Questions and Help: <a href="https://offternet.com/index.php/contact-menu" target="https://offternet.com/index.php/contact-menu">https://offternet.com/index.php/contact-menu</a>
+    <br><br>
+    <b>image file format:</b> url/image.(png|jpg)<br>
+    - http:// | https://path-to/filename.xxx
+    <br>
+    <br>
+    <b>image url link:</b> If image entered, must enter url too.
+    - target is optional: Default is _self | _Blank opens url in to new tab.
+    <br><br>
+    <b>Code Input Options:</b><br>
+    - Drad & Drop html or image file <br>
+    - Drag & Drop text or html and Javascript code too. <br>
+    - Manully enter code.
+    - Generated (title).html file will be Downloaded to your browser Download folder.
+    <br><br><br>
+</body>
+</html>
